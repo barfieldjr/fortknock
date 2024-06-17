@@ -1,6 +1,0 @@
-train: /content/drive/MyDrive/fort/obj_train_data/images/train
-val: /content/drive/MyDrive/fort/obj_train_data/images/val
-test: /content/drive/MyDrive/fort/obj_train_data/images/test
-
-nc: 1 # number of classes
-names: ["knockdown"] # class names
