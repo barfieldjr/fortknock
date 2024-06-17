@@ -89,9 +89,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgments
 
 - [YOLOv5](https://github.com/ultralytics/yolov5) by Ultralytics
-- The Fortnite community for gameplay footage
-
-## Contact
-
-For any questions or inquiries, please contact [your name] at [your email].
-
