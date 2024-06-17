@@ -8,7 +8,7 @@ FortKnock is a machine learning project that uses the YOLOv5 object detection mo
 
 - `data/`: Submodule containing training data (private repository).
 - `notebooks/`: Jupyter notebooks for data exploration, model training, and evaluation.
-- `saves/models/`: Directory to save trained models.
+- `saves/models/`: Train model and weights.
 - `tests/`: Test scripts and test data.
 - `.gitmodules`: Configuration file for the submodule.
 - `Dockerfile`: Docker configuration for setting up the project environment.
