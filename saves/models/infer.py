@@ -1,9 +1,18 @@
 import torch
 import cv2
-import matplotlib.pyplot as plt
+import numpy as np
 import random
-from pathlib import Path
 import os
+import subprocess
+
+def reduce_fps(input_video_path, output_video_path, fps):
+    command = [
+        'ffmpeg',
+        '-i', input_video_path,
+        '-r', str(fps),
+        output_video_path
+    ]
+    subprocess.run(command, check=True)
 
 def plot_one_box(x, img, color=None, label=None, line_thickness=3):
     tl = line_thickness or round(0.002 * (img.shape[0] + img.shape[1]) / 2) + 1
@@ -26,70 +35,91 @@ def is_within_region(x, img_width, img_height):
 
 def draw_region_bounds(img):
     img_height, img_width, _ = img.shape
-    # Draw middle two-quarters horizontally
     x1, x2 = img_width // 4, 3 * img_width // 4
     y1, y2 = img_height // 2, img_height
     cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
-def infer(image_path):
-    print(f"Starting inference on image: {image_path}")
+def process_video(video_path, output_path):
+    print(f"Starting inference on video: {video_path}")
     
     # Load the model
-    model_path = 'saves/models/knockdown_model_weights.pt'
-    yolo_repo_path = './yolov5'
+    model_path = './knockdown_model_weights.pt'
+    yolo_repo_path = '../../yolov5'
     
     if not os.path.exists(yolo_repo_path):
         raise FileNotFoundError(f"YOLOv5 directory not found at {yolo_repo_path}")
     if not os.path.exists(os.path.join(yolo_repo_path, 'hubconf.py')):
         raise FileNotFoundError(f"hubconf.py not found in {yolo_repo_path}")
     
+    print("Loading model...")
     model = torch.hub.load(yolo_repo_path, 'custom', path=model_path, source='local')
     model.conf = 0.3  # Lower confidence threshold
     print("Model loaded successfully.")
     
-    # Read and resize the image
-    img = cv2.imread(image_path)
-    if img is None:
-        raise FileNotFoundError(f"Image not found at {image_path}")
-    img_resized = cv2.resize(img, (640, 640))
-    img_height, img_width, _ = img_resized.shape
-    print("Image loaded and resized successfully.")
+    # Open the video file
+    print("Opening video file...")
+    cap = cv2.VideoCapture(video_path)
+    if not cap.isOpened():
+        raise FileNotFoundError(f"Video not found at {video_path}")
     
-    # Draw the specified region bounds
-    draw_region_bounds(img_resized)
+    # Get video properties
+    frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = int(cap.get(cv2.CAP_PROP_FPS))
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    print(f"Video properties: width={frame_width}, height={frame_height}, fps={fps}, total_frames={total_frames}")
     
-    # Run inference
-    results = model(img_resized)
-    print("Inference completed.")
+    # Define the codec and create VideoWriter object
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    out = cv2.VideoWriter(output_path, fourcc, fps, (640, 640))
     
-    # Draw bounding boxes
-    num_detections = results.xyxy[0].shape[0]
-    print(f"Number of detections: {num_detections}")
-    for *box, conf, cls in results.xyxy[0]:
-        print(f"Detection: Class={model.names[int(cls)]}, Confidence={conf:.2f}")
-        if is_within_region(box, img_width, img_height):
-            label = f'{model.names[int(cls)]} {conf:.2f}'
-            plot_one_box(box, img_resized, label=label, color=(255, 0, 0), line_thickness=2)
-            print(f"Location (within region): {box}")
-        else:
-            print("Detection outside specified region, ignoring.")
+    frame_count = 0
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            print(f"End of video or can't read frame at frame {frame_count}.")
+            break
+        
+        frame_count += 1
+        if frame_count % 10 == 0:
+            print(f"Processing frame {frame_count}/{total_frames}")
+        
+        try:
+            img_resized = cv2.resize(frame, (640, 640))
+            img_height, img_width, _ = img_resized.shape
+            
+            # Draw the specified region bounds
+            draw_region_bounds(img_resized)
+            
+            # Run inference
+            print(f"Running inference on frame {frame_count}...")
+            results = model(img_resized)
+            
+            # Draw bounding boxes
+            for *box, conf, cls in results.xyxy[0]:
+                if is_within_region(box, img_width, img_height):
+                    label = f'{model.names[int(cls)]} {conf:.2f}'
+                    plot_one_box(box, img_resized, label=label, color=(255, 0, 0), line_thickness=2)
+            
+            # Write the frame with bounding boxes to the output video
+            out.write(img_resized)
+        except Exception as e:
+            print(f"Error processing frame {frame_count}: {e}")
+            break
     
-    img_rgb = cv2.cvtColor(img_resized, cv2.COLOR_BGR2RGB)
-    plt.figure(figsize=(10, 10))
-    plt.imshow(img_rgb)
-    plt.axis('off')
-    plt.savefig("/app/inference_output.png")  # Save the output image
-    plt.show()
-
-def get_random_image_path(directory):
-    image_extensions = ['.jpg', '.jpeg', '.png']
-    image_paths = [p for p in Path(directory).glob('*') if p.suffix.lower() in image_extensions]
-    if not image_paths:
-        raise FileNotFoundError(f"No images found in directory {directory}")
-    return random.choice(image_paths)
+    cap.release()
+    out.release()
+    print(f"Processed video saved to {output_path}")
+    print("Processing completed.")
 
 if __name__ == "__main__":
-    test_image_directory = 'data/raw/obj_train_data/images/test'
-    image_path = get_random_image_path(test_image_directory)
-    print(f"Selected image for inference: {image_path}")
-    infer(image_path)
+    input_video_path = '/Users/chrisbarfield/fortknock/data/raw/obj_train_data/videos/test_video.mov'  # Use absolute path
+    reduced_fps_video_path = '/Users/chrisbarfield/fortknock/data/raw/obj_train_data/videos/reduced_fps_video.mov'
+    output_path = '/Users/chrisbarfield/fortknock/output/processed_video.mp4'
+    
+    # Reduce the FPS of the video
+    print("Reducing FPS of the video...")
+    reduce_fps(input_video_path, reduced_fps_video_path, 15)  # Change FPS as needed
+    
+    # Process the video with reduced FPS
+    process_video(reduced_fps_video_path, output_path)
