@@ -144,7 +144,7 @@ def process_video(video_path, output_path, json_output_path, frames_output_path)
     print("Processing completed.")
 
 if __name__ == "__main__":
-    input_video_path = '/Users/chrisbarfield/fortknock/data/raw/obj_train_data/videos/test_video.mov'  # Use absolute path
+    input_video_path = '../../data/raw/obj_train_data/videos/fortnite.mp4'  # Use absolute path
     reduced_fps_video_path = '/Users/chrisbarfield/fortknock/data/raw/obj_train_data/videos/reduced_fps_video.mov'
     output_video_path = '/Users/chrisbarfield/fortknock/output/processed_video.mp4'
     json_output_path = '/Users/chrisbarfield/fortknock/output/detection_timestamps.json'
@@ -152,7 +152,7 @@ if __name__ == "__main__":
     
     # Reduce the FPS of the video
     print("Reducing FPS of the video...")
-    reduce_fps(input_video_path, reduced_fps_video_path, 5)  # Change FPS as needed
+    reduce_fps(input_video_path, reduced_fps_video_path, 3)  # Change FPS as needed
     
     # Process the video with reduced FPS
     process_video(reduced_fps_video_path, output_video_path, json_output_path, frames_output_path)

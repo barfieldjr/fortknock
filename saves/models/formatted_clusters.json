@@ -1,459 +1,381 @@
 [
     {
         "cluster_id": 1,
-        "start_frame": 105,
-        "end_frame": 116,
-        "start_timestamp": 21.0,
-        "end_timestamp": 23.2,
+        "start_frame": 654,
+        "end_frame": 659,
+        "start_timestamp": 218.0,
+        "end_timestamp": 219.66666666666666,
         "detections": [
             {
-                "frame": 105,
-                "timestamp": 21.0,
+                "frame": 654,
+                "timestamp": 218.0,
                 "label": "knockdown 0.26",
-                "confidence": 0.2630346417427063,
+                "confidence": 0.26371413469314575,
                 "box": [
-                    219,
-                    431,
-                    375,
-                    457
+                    246,
+                    435,
+                    388,
+                    462
                 ]
             },
             {
-                "frame": 106,
-                "timestamp": 21.2,
-                "label": "knockdown 0.23",
-                "confidence": 0.2324044555425644,
-                "box": [
-                    218,
-                    430,
-                    378,
-                    457
-                ]
-            },
-            {
-                "frame": 107,
-                "timestamp": 21.4,
-                "label": "knockdown 0.26",
-                "confidence": 0.2617441713809967,
-                "box": [
-                    220,
-                    432,
-                    378,
-                    458
-                ]
-            },
-            {
-                "frame": 108,
-                "timestamp": 21.6,
-                "label": "knockdown 0.28",
-                "confidence": 0.2755874991416931,
-                "box": [
-                    221,
-                    431,
-                    376,
-                    457
-                ]
-            },
-            {
-                "frame": 109,
-                "timestamp": 21.8,
-                "label": "knockdown 0.25",
-                "confidence": 0.2537192404270172,
-                "box": [
-                    217,
-                    431,
-                    381,
-                    457
-                ]
-            },
-            {
-                "frame": 110,
-                "timestamp": 22.0,
-                "label": "knockdown 0.25",
-                "confidence": 0.2548074722290039,
-                "box": [
-                    218,
-                    432,
-                    379,
-                    456
-                ]
-            },
-            {
-                "frame": 111,
-                "timestamp": 22.2,
-                "label": "knockdown 0.25",
-                "confidence": 0.24645555019378662,
-                "box": [
-                    224,
-                    432,
-                    375,
-                    456
-                ]
-            },
-            {
-                "frame": 112,
-                "timestamp": 22.4,
-                "label": "knockdown 0.28",
-                "confidence": 0.28453895449638367,
-                "box": [
-                    219,
-                    432,
-                    378,
-                    457
-                ]
-            },
-            {
-                "frame": 113,
-                "timestamp": 22.6,
-                "label": "knockdown 0.28",
-                "confidence": 0.2762235403060913,
-                "box": [
-                    221,
-                    433,
-                    376,
-                    457
-                ]
-            },
-            {
-                "frame": 114,
-                "timestamp": 22.8,
-                "label": "knockdown 0.24",
-                "confidence": 0.24482564628124237,
-                "box": [
-                    217,
-                    431,
-                    379,
-                    457
-                ]
-            },
-            {
-                "frame": 115,
-                "timestamp": 23.0,
+                "frame": 655,
+                "timestamp": 218.33333333333334,
                 "label": "knockdown 0.27",
-                "confidence": 0.2689710259437561,
+                "confidence": 0.2739909291267395,
                 "box": [
-                    221,
-                    433,
-                    378,
-                    457
+                    247,
+                    435,
+                    386,
+                    462
                 ]
             },
             {
-                "frame": 116,
-                "timestamp": 23.2,
-                "label": "knockdown 0.26",
-                "confidence": 0.2571395933628082,
+                "frame": 656,
+                "timestamp": 218.66666666666666,
+                "label": "knockdown 0.25",
+                "confidence": 0.2547554075717926,
                 "box": [
-                    219,
-                    433,
-                    376,
-                    456
+                    246,
+                    436,
+                    387,
+                    461
+                ]
+            },
+            {
+                "frame": 658,
+                "timestamp": 219.33333333333334,
+                "label": "knockdown 0.29",
+                "confidence": 0.2921352982521057,
+                "box": [
+                    245,
+                    436,
+                    388,
+                    461
+                ]
+            },
+            {
+                "frame": 659,
+                "timestamp": 219.66666666666666,
+                "label": "knockdown 0.28",
+                "confidence": 0.2807355225086212,
+                "box": [
+                    238,
+                    435,
+                    399,
+                    463
                 ]
             }
         ]
     },
     {
         "cluster_id": 2,
-        "start_frame": 122,
-        "end_frame": 136,
-        "start_timestamp": 24.4,
-        "end_timestamp": 27.2,
+        "start_frame": 817,
+        "end_frame": 821,
+        "start_timestamp": 272.3333333333333,
+        "end_timestamp": 273.6666666666667,
         "detections": [
             {
-                "frame": 122,
-                "timestamp": 24.4,
-                "label": "knockdown 0.28",
-                "confidence": 0.28359803557395935,
+                "frame": 817,
+                "timestamp": 272.3333333333333,
+                "label": "knockdown 0.24",
+                "confidence": 0.24289973080158234,
                 "box": [
-                    223,
-                    432,
-                    359,
-                    456
+                    246,
+                    437,
+                    389,
+                    462
                 ]
             },
             {
-                "frame": 123,
-                "timestamp": 24.6,
-                "label": "knockdown 0.29",
-                "confidence": 0.2948850691318512,
+                "frame": 818,
+                "timestamp": 272.6666666666667,
+                "label": "knockdown 0.22",
+                "confidence": 0.22250986099243164,
                 "box": [
-                    222,
-                    431,
-                    360,
-                    455
+                    245,
+                    436,
+                    390,
+                    462
                 ]
             },
             {
-                "frame": 124,
-                "timestamp": 24.8,
-                "label": "knockdown 0.31",
-                "confidence": 0.3066200017929077,
-                "box": [
-                    221,
-                    431,
-                    360,
-                    456
-                ]
-            },
-            {
-                "frame": 125,
-                "timestamp": 25.0,
-                "label": "knockdown 0.31",
-                "confidence": 0.31130826473236084,
-                "box": [
-                    221,
-                    432,
-                    359,
-                    455
-                ]
-            },
-            {
-                "frame": 126,
-                "timestamp": 25.2,
-                "label": "knockdown 0.27",
-                "confidence": 0.2691732943058014,
-                "box": [
-                    220,
-                    431,
-                    361,
-                    456
-                ]
-            },
-            {
-                "frame": 127,
-                "timestamp": 25.4,
+                "frame": 819,
+                "timestamp": 273.0,
                 "label": "knockdown 0.26",
-                "confidence": 0.2626171410083771,
+                "confidence": 0.26135414838790894,
                 "box": [
-                    215,
-                    431,
-                    360,
-                    456
+                    245,
+                    435,
+                    391,
+                    462
                 ]
             },
             {
-                "frame": 128,
-                "timestamp": 25.6,
-                "label": "knockdown 0.29",
-                "confidence": 0.2907102704048157,
-                "box": [
-                    215,
-                    432,
-                    363,
-                    457
-                ]
-            },
-            {
-                "frame": 129,
-                "timestamp": 25.8,
-                "label": "knockdown 0.28",
-                "confidence": 0.27982082962989807,
-                "box": [
-                    215,
-                    431,
-                    364,
-                    457
-                ]
-            },
-            {
-                "frame": 130,
-                "timestamp": 26.0,
-                "label": "knockdown 0.27",
-                "confidence": 0.26522281765937805,
-                "box": [
-                    214,
-                    432,
-                    363,
-                    457
-                ]
-            },
-            {
-                "frame": 131,
-                "timestamp": 26.2,
+                "frame": 820,
+                "timestamp": 273.3333333333333,
                 "label": "knockdown 0.25",
-                "confidence": 0.2461879402399063,
+                "confidence": 0.2515237331390381,
                 "box": [
-                    216,
-                    431,
-                    362,
-                    455
+                    247,
+                    436,
+                    389,
+                    461
                 ]
             },
             {
-                "frame": 132,
-                "timestamp": 26.4,
-                "label": "knockdown 0.26",
-                "confidence": 0.2627372741699219,
+                "frame": 821,
+                "timestamp": 273.6666666666667,
+                "label": "knockdown 0.25",
+                "confidence": 0.24928221106529236,
                 "box": [
-                    215,
-                    431,
-                    360,
-                    457
-                ]
-            },
-            {
-                "frame": 133,
-                "timestamp": 26.6,
-                "label": "knockdown 0.20",
-                "confidence": 0.20209069550037384,
-                "box": [
-                    198,
-                    431,
-                    368,
-                    457
-                ]
-            },
-            {
-                "frame": 136,
-                "timestamp": 27.2,
-                "label": "knockdown 0.20",
-                "confidence": 0.20453880727291107,
-                "box": [
-                    215,
-                    431,
-                    346,
-                    456
+                    246,
+                    436,
+                    390,
+                    461
                 ]
             }
         ]
     },
     {
         "cluster_id": 3,
-        "start_frame": 349,
-        "end_frame": 359,
-        "start_timestamp": 69.8,
-        "end_timestamp": 71.8,
+        "start_frame": 2015,
+        "end_frame": 2021,
+        "start_timestamp": 671.6666666666666,
+        "end_timestamp": 673.6666666666666,
         "detections": [
             {
-                "frame": 349,
-                "timestamp": 69.8,
-                "label": "knockdown 0.23",
-                "confidence": 0.23399507999420166,
+                "frame": 2015,
+                "timestamp": 671.6666666666666,
+                "label": "knockdown 0.28",
+                "confidence": 0.2823469042778015,
                 "box": [
-                    213,
-                    430,
-                    385,
-                    458
+                    241,
+                    434,
+                    398,
+                    460
                 ]
             },
             {
-                "frame": 350,
-                "timestamp": 70.0,
-                "label": "knockdown 0.22",
-                "confidence": 0.21522271633148193,
+                "frame": 2016,
+                "timestamp": 672.0,
+                "label": "knockdown 0.28",
+                "confidence": 0.2801143527030945,
                 "box": [
-                    211,
-                    431,
-                    386,
-                    458
+                    246,
+                    435,
+                    398,
+                    461
                 ]
             },
             {
-                "frame": 351,
-                "timestamp": 70.2,
-                "label": "knockdown 0.22",
-                "confidence": 0.21715953946113586,
+                "frame": 2017,
+                "timestamp": 672.3333333333334,
+                "label": "knockdown 0.29",
+                "confidence": 0.2944473326206207,
                 "box": [
-                    219,
-                    432,
-                    382,
-                    456
+                    243,
+                    435,
+                    394,
+                    462
                 ]
             },
             {
-                "frame": 352,
-                "timestamp": 70.4,
-                "label": "knockdown 0.22",
-                "confidence": 0.22031226754188538,
+                "frame": 2018,
+                "timestamp": 672.6666666666666,
+                "label": "knockdown 0.21",
+                "confidence": 0.21011905372142792,
                 "box": [
-                    216,
-                    431,
-                    384,
-                    457
+                    227,
+                    435,
+                    394,
+                    461
                 ]
             },
             {
-                "frame": 353,
-                "timestamp": 70.6,
-                "label": "knockdown 0.22",
-                "confidence": 0.22154530882835388,
+                "frame": 2019,
+                "timestamp": 673.0,
+                "label": "knockdown 0.27",
+                "confidence": 0.2719435393810272,
                 "box": [
-                    209,
-                    431,
-                    385,
-                    458
+                    240,
+                    434,
+                    394,
+                    462
                 ]
             },
             {
-                "frame": 354,
-                "timestamp": 70.8,
-                "label": "knockdown 0.22",
-                "confidence": 0.21964119374752045,
+                "frame": 2020,
+                "timestamp": 673.3333333333334,
+                "label": "knockdown 0.32",
+                "confidence": 0.31813278794288635,
                 "box": [
-                    214,
-                    431,
-                    386,
-                    457
+                    239,
+                    435,
+                    394,
+                    461
                 ]
             },
             {
-                "frame": 355,
-                "timestamp": 71.0,
-                "label": "knockdown 0.22",
-                "confidence": 0.2218168079853058,
+                "frame": 2021,
+                "timestamp": 673.6666666666666,
+                "label": "knockdown 0.33",
+                "confidence": 0.3304348587989807,
                 "box": [
-                    210,
-                    431,
+                    243,
+                    433,
+                    399,
+                    460
+                ]
+            }
+        ]
+    },
+    {
+        "cluster_id": 4,
+        "start_frame": 2511,
+        "end_frame": 2515,
+        "start_timestamp": 837.0,
+        "end_timestamp": 838.3333333333334,
+        "detections": [
+            {
+                "frame": 2511,
+                "timestamp": 837.0,
+                "label": "knockdown 0.29",
+                "confidence": 0.29184678196907043,
+                "box": [
+                    242,
+                    434,
+                    399,
+                    461
+                ]
+            },
+            {
+                "frame": 2512,
+                "timestamp": 837.3333333333334,
+                "label": "knockdown 0.21",
+                "confidence": 0.21211610734462738,
+                "box": [
+                    248,
+                    435,
+                    387,
+                    463
+                ]
+            },
+            {
+                "frame": 2513,
+                "timestamp": 837.6666666666666,
+                "label": "knockdown 0.27",
+                "confidence": 0.2663571834564209,
+                "box": [
+                    244,
+                    436,
                     391,
-                    459
+                    461
                 ]
             },
             {
-                "frame": 356,
-                "timestamp": 71.2,
+                "frame": 2514,
+                "timestamp": 838.0,
+                "label": "knockdown 0.27",
+                "confidence": 0.2700076997280121,
+                "box": [
+                    239,
+                    434,
+                    400,
+                    462
+                ]
+            },
+            {
+                "frame": 2515,
+                "timestamp": 838.3333333333334,
                 "label": "knockdown 0.26",
-                "confidence": 0.25567927956581116,
+                "confidence": 0.25843697786331177,
                 "box": [
-                    211,
-                    431,
-                    385,
-                    457
+                    233,
+                    435,
+                    406,
+                    463
+                ]
+            }
+        ]
+    },
+    {
+        "cluster_id": 5,
+        "start_frame": 2528,
+        "end_frame": 2533,
+        "start_timestamp": 842.6666666666666,
+        "end_timestamp": 844.3333333333334,
+        "detections": [
+            {
+                "frame": 2528,
+                "timestamp": 842.6666666666666,
+                "label": "knockdown 0.25",
+                "confidence": 0.25274646282196045,
+                "box": [
+                    240,
+                    436,
+                    398,
+                    463
                 ]
             },
             {
-                "frame": 357,
-                "timestamp": 71.4,
-                "label": "knockdown 0.23",
-                "confidence": 0.2259010225534439,
+                "frame": 2529,
+                "timestamp": 843.0,
+                "label": "knockdown 0.25",
+                "confidence": 0.2471534162759781,
                 "box": [
-                    218,
-                    431,
-                    384,
-                    458
+                    241,
+                    436,
+                    396,
+                    463
                 ]
             },
             {
-                "frame": 358,
-                "timestamp": 71.6,
-                "label": "knockdown 0.23",
-                "confidence": 0.23368170857429504,
-                "box": [
-                    216,
-                    431,
-                    382,
-                    457
-                ]
-            },
-            {
-                "frame": 359,
-                "timestamp": 71.8,
+                "frame": 2530,
+                "timestamp": 843.3333333333334,
                 "label": "knockdown 0.24",
-                "confidence": 0.2431773543357849,
+                "confidence": 0.23857998847961426,
                 "box": [
-                    214,
-                    431,
-                    383,
-                    457
+                    235,
+                    435,
+                    398,
+                    463
+                ]
+            },
+            {
+                "frame": 2531,
+                "timestamp": 843.6666666666666,
+                "label": "knockdown 0.25",
+                "confidence": 0.25011146068573,
+                "box": [
+                    238,
+                    435,
+                    401,
+                    463
+                ]
+            },
+            {
+                "frame": 2532,
+                "timestamp": 844.0,
+                "label": "knockdown 0.22",
+                "confidence": 0.21862687170505524,
+                "box": [
+                    236,
+                    435,
+                    399,
+                    462
+                ]
+            },
+            {
+                "frame": 2533,
+                "timestamp": 844.3333333333334,
+                "label": "knockdown 0.25",
+                "confidence": 0.2473824918270111,
+                "box": [
+                    239,
+                    436,
+                    399,
+                    462
                 ]
             }
         ]

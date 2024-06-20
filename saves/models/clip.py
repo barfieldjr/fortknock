@@ -10,7 +10,7 @@ def load_json(file_path: str) -> List[Dict[str, Any]]:
     return data
 
 # Function to merge overlapping clusters
-def merge_clusters(clusters: List[Dict[str, Any]], pre_duration: float = 10.0, post_duration: float = 3.0) -> List[Dict[str, Any]]:
+def merge_clusters(clusters: List[Dict[str, Any]], pre_duration: float = 6.0, post_duration: float = 2.0) -> List[Dict[str, Any]]:
     merged_clusters = []
     for cluster in clusters:
         start_time = max(0, cluster['start_timestamp'] - pre_duration)
@@ -37,13 +37,18 @@ def crop_video(video_path: str, clusters: List[Dict[str, Any]], output_dir: str)
         output_path = os.path.join(output_dir, f"clip_{i+1}.mp4")
         clip_paths.append(output_path)
         
-        # ffmpeg command to crop the video
+        # ffmpeg command to crop the video at keyframes
         cmd = [
             'ffmpeg',
             '-i', video_path,
             '-ss', str(start_time),
             '-t', str(duration),
-            '-c', 'copy',
+            '-c:v', 'libx264',
+            '-preset', 'fast',
+            '-crf', '18',
+            '-pix_fmt', 'yuv420p',
+            '-c:a', 'aac',
+            '-b:a', '128k',
             output_path
         ]
         subprocess.run(cmd, check=True)
@@ -63,7 +68,12 @@ def merge_clips(clip_paths: List[str], output_path: str):
         '-f', 'concat',
         '-safe', '0',
         '-i', 'clip_list.txt',
-        '-c', 'copy',
+        '-c:v', 'libx264',
+        '-preset', 'fast',
+        '-crf', '18',
+        '-pix_fmt', 'yuv420p',
+        '-c:a', 'aac',
+        '-b:a', '128k',
         output_path
     ]
     subprocess.run(cmd, check=True)
@@ -72,9 +82,9 @@ def merge_clips(clip_paths: List[str], output_path: str):
 # Main function to process the JSON data, crop the video, and merge the clips
 def main():
     input_json = './formatted_clusters.json'  # Replace with your JSON file path
-    video_path = '../../data/raw/obj_train_data/videos/test_video.mov'  # Replace with your video file path
+    video_path = '../../data/raw/obj_train_data/videos/fortnite.mp4'  # Replace with your video file path
     output_dir = '../../output/clips/output_clips'  # Directory to save cropped clips
-    merged_output_path = '../../output/clips/merged/merged_video.mp4'  # Path to save the merged video
+    merged_output_path = '../../output/merged/merged_video.mp4'  # Path to save the merged video
     
     clusters = load_json(input_json)
     
