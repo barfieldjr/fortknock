@@ -8,7 +8,7 @@ def load_json(file_path: str) -> List[Dict[str, Any]]:
     return data
 
 # Function to find clusters based on time and frame difference
-def find_clusters(detections: List[Dict[str, Any]], time_threshold: float = 2.0, frame_gap: int = 2) -> List[List[Dict[str, Any]]]:
+def find_clusters(detections: List[Dict[str, Any]], time_threshold: float = 2.0, frame_gap: int = 3) -> List[List[Dict[str, Any]]]:
     clusters = []
     current_cluster = []
 
@@ -38,6 +38,23 @@ def filter_clusters(clusters: List[List[Dict[str, Any]]], min_cluster_length: in
 
     return filtered_clusters
 
+# Function to format clusters into a structured data model
+def format_clusters(clusters: List[List[Dict[str, Any]]]) -> List[Dict[str, Any]]:
+    formatted_clusters = []
+
+    for i, cluster in enumerate(clusters):
+        cluster_data = {
+            "cluster_id": i + 1,
+            "start_frame": cluster[0]["frame"],
+            "end_frame": cluster[-1]["frame"],
+            "start_timestamp": cluster[0]["timestamp"],
+            "end_timestamp": cluster[-1]["timestamp"],
+            "detections": cluster
+        }
+        formatted_clusters.append(cluster_data)
+
+    return formatted_clusters
+
 # Main function to process the JSON data and extract clusters
 def main():
     file_path = '../../output/detection_timestamps.json'  # Replace with your JSON file path
@@ -49,12 +66,16 @@ def main():
     # Filter clusters to ensure each has at least 3 detections
     filtered_clusters = filter_clusters(clusters)
 
-    # Print the clusters
-    for i, cluster in enumerate(filtered_clusters):
-        print(f"Cluster {i + 1}:")
-        for detection in cluster:
-            print(detection)
-        print()
+    # Format clusters into the desired data model
+    formatted_clusters = format_clusters(filtered_clusters)
+
+    # Output the data model
+    with open('./formatted_clusters.json', 'w') as outfile:
+        json.dump(formatted_clusters, outfile, indent=4)
+
+    # Print the clusters (optional, for verification)
+    for cluster in formatted_clusters:
+        print(cluster)
 
 if __name__ == "__main__":
     main()

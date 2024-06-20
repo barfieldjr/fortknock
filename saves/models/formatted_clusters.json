@@ -1,0 +1,461 @@
+[
+    {
+        "cluster_id": 1,
+        "start_frame": 105,
+        "end_frame": 116,
+        "start_timestamp": 21.0,
+        "end_timestamp": 23.2,
+        "detections": [
+            {
+                "frame": 105,
+                "timestamp": 21.0,
+                "label": "knockdown 0.26",
+                "confidence": 0.2630346417427063,
+                "box": [
+                    219,
+                    431,
+                    375,
+                    457
+                ]
+            },
+            {
+                "frame": 106,
+                "timestamp": 21.2,
+                "label": "knockdown 0.23",
+                "confidence": 0.2324044555425644,
+                "box": [
+                    218,
+                    430,
+                    378,
+                    457
+                ]
+            },
+            {
+                "frame": 107,
+                "timestamp": 21.4,
+                "label": "knockdown 0.26",
+                "confidence": 0.2617441713809967,
+                "box": [
+                    220,
+                    432,
+                    378,
+                    458
+                ]
+            },
+            {
+                "frame": 108,
+                "timestamp": 21.6,
+                "label": "knockdown 0.28",
+                "confidence": 0.2755874991416931,
+                "box": [
+                    221,
+                    431,
+                    376,
+                    457
+                ]
+            },
+            {
+                "frame": 109,
+                "timestamp": 21.8,
+                "label": "knockdown 0.25",
+                "confidence": 0.2537192404270172,
+                "box": [
+                    217,
+                    431,
+                    381,
+                    457
+                ]
+            },
+            {
+                "frame": 110,
+                "timestamp": 22.0,
+                "label": "knockdown 0.25",
+                "confidence": 0.2548074722290039,
+                "box": [
+                    218,
+                    432,
+                    379,
+                    456
+                ]
+            },
+            {
+                "frame": 111,
+                "timestamp": 22.2,
+                "label": "knockdown 0.25",
+                "confidence": 0.24645555019378662,
+                "box": [
+                    224,
+                    432,
+                    375,
+                    456
+                ]
+            },
+            {
+                "frame": 112,
+                "timestamp": 22.4,
+                "label": "knockdown 0.28",
+                "confidence": 0.28453895449638367,
+                "box": [
+                    219,
+                    432,
+                    378,
+                    457
+                ]
+            },
+            {
+                "frame": 113,
+                "timestamp": 22.6,
+                "label": "knockdown 0.28",
+                "confidence": 0.2762235403060913,
+                "box": [
+                    221,
+                    433,
+                    376,
+                    457
+                ]
+            },
+            {
+                "frame": 114,
+                "timestamp": 22.8,
+                "label": "knockdown 0.24",
+                "confidence": 0.24482564628124237,
+                "box": [
+                    217,
+                    431,
+                    379,
+                    457
+                ]
+            },
+            {
+                "frame": 115,
+                "timestamp": 23.0,
+                "label": "knockdown 0.27",
+                "confidence": 0.2689710259437561,
+                "box": [
+                    221,
+                    433,
+                    378,
+                    457
+                ]
+            },
+            {
+                "frame": 116,
+                "timestamp": 23.2,
+                "label": "knockdown 0.26",
+                "confidence": 0.2571395933628082,
+                "box": [
+                    219,
+                    433,
+                    376,
+                    456
+                ]
+            }
+        ]
+    },
+    {
+        "cluster_id": 2,
+        "start_frame": 122,
+        "end_frame": 136,
+        "start_timestamp": 24.4,
+        "end_timestamp": 27.2,
+        "detections": [
+            {
+                "frame": 122,
+                "timestamp": 24.4,
+                "label": "knockdown 0.28",
+                "confidence": 0.28359803557395935,
+                "box": [
+                    223,
+                    432,
+                    359,
+                    456
+                ]
+            },
+            {
+                "frame": 123,
+                "timestamp": 24.6,
+                "label": "knockdown 0.29",
+                "confidence": 0.2948850691318512,
+                "box": [
+                    222,
+                    431,
+                    360,
+                    455
+                ]
+            },
+            {
+                "frame": 124,
+                "timestamp": 24.8,
+                "label": "knockdown 0.31",
+                "confidence": 0.3066200017929077,
+                "box": [
+                    221,
+                    431,
+                    360,
+                    456
+                ]
+            },
+            {
+                "frame": 125,
+                "timestamp": 25.0,
+                "label": "knockdown 0.31",
+                "confidence": 0.31130826473236084,
+                "box": [
+                    221,
+                    432,
+                    359,
+                    455
+                ]
+            },
+            {
+                "frame": 126,
+                "timestamp": 25.2,
+                "label": "knockdown 0.27",
+                "confidence": 0.2691732943058014,
+                "box": [
+                    220,
+                    431,
+                    361,
+                    456
+                ]
+            },
+            {
+                "frame": 127,
+                "timestamp": 25.4,
+                "label": "knockdown 0.26",
+                "confidence": 0.2626171410083771,
+                "box": [
+                    215,
+                    431,
+                    360,
+                    456
+                ]
+            },
+            {
+                "frame": 128,
+                "timestamp": 25.6,
+                "label": "knockdown 0.29",
+                "confidence": 0.2907102704048157,
+                "box": [
+                    215,
+                    432,
+                    363,
+                    457
+                ]
+            },
+            {
+                "frame": 129,
+                "timestamp": 25.8,
+                "label": "knockdown 0.28",
+                "confidence": 0.27982082962989807,
+                "box": [
+                    215,
+                    431,
+                    364,
+                    457
+                ]
+            },
+            {
+                "frame": 130,
+                "timestamp": 26.0,
+                "label": "knockdown 0.27",
+                "confidence": 0.26522281765937805,
+                "box": [
+                    214,
+                    432,
+                    363,
+                    457
+                ]
+            },
+            {
+                "frame": 131,
+                "timestamp": 26.2,
+                "label": "knockdown 0.25",
+                "confidence": 0.2461879402399063,
+                "box": [
+                    216,
+                    431,
+                    362,
+                    455
+                ]
+            },
+            {
+                "frame": 132,
+                "timestamp": 26.4,
+                "label": "knockdown 0.26",
+                "confidence": 0.2627372741699219,
+                "box": [
+                    215,
+                    431,
+                    360,
+                    457
+                ]
+            },
+            {
+                "frame": 133,
+                "timestamp": 26.6,
+                "label": "knockdown 0.20",
+                "confidence": 0.20209069550037384,
+                "box": [
+                    198,
+                    431,
+                    368,
+                    457
+                ]
+            },
+            {
+                "frame": 136,
+                "timestamp": 27.2,
+                "label": "knockdown 0.20",
+                "confidence": 0.20453880727291107,
+                "box": [
+                    215,
+                    431,
+                    346,
+                    456
+                ]
+            }
+        ]
+    },
+    {
+        "cluster_id": 3,
+        "start_frame": 349,
+        "end_frame": 359,
+        "start_timestamp": 69.8,
+        "end_timestamp": 71.8,
+        "detections": [
+            {
+                "frame": 349,
+                "timestamp": 69.8,
+                "label": "knockdown 0.23",
+                "confidence": 0.23399507999420166,
+                "box": [
+                    213,
+                    430,
+                    385,
+                    458
+                ]
+            },
+            {
+                "frame": 350,
+                "timestamp": 70.0,
+                "label": "knockdown 0.22",
+                "confidence": 0.21522271633148193,
+                "box": [
+                    211,
+                    431,
+                    386,
+                    458
+                ]
+            },
+            {
+                "frame": 351,
+                "timestamp": 70.2,
+                "label": "knockdown 0.22",
+                "confidence": 0.21715953946113586,
+                "box": [
+                    219,
+                    432,
+                    382,
+                    456
+                ]
+            },
+            {
+                "frame": 352,
+                "timestamp": 70.4,
+                "label": "knockdown 0.22",
+                "confidence": 0.22031226754188538,
+                "box": [
+                    216,
+                    431,
+                    384,
+                    457
+                ]
+            },
+            {
+                "frame": 353,
+                "timestamp": 70.6,
+                "label": "knockdown 0.22",
+                "confidence": 0.22154530882835388,
+                "box": [
+                    209,
+                    431,
+                    385,
+                    458
+                ]
+            },
+            {
+                "frame": 354,
+                "timestamp": 70.8,
+                "label": "knockdown 0.22",
+                "confidence": 0.21964119374752045,
+                "box": [
+                    214,
+                    431,
+                    386,
+                    457
+                ]
+            },
+            {
+                "frame": 355,
+                "timestamp": 71.0,
+                "label": "knockdown 0.22",
+                "confidence": 0.2218168079853058,
+                "box": [
+                    210,
+                    431,
+                    391,
+                    459
+                ]
+            },
+            {
+                "frame": 356,
+                "timestamp": 71.2,
+                "label": "knockdown 0.26",
+                "confidence": 0.25567927956581116,
+                "box": [
+                    211,
+                    431,
+                    385,
+                    457
+                ]
+            },
+            {
+                "frame": 357,
+                "timestamp": 71.4,
+                "label": "knockdown 0.23",
+                "confidence": 0.2259010225534439,
+                "box": [
+                    218,
+                    431,
+                    384,
+                    458
+                ]
+            },
+            {
+                "frame": 358,
+                "timestamp": 71.6,
+                "label": "knockdown 0.23",
+                "confidence": 0.23368170857429504,
+                "box": [
+                    216,
+                    431,
+                    382,
+                    457
+                ]
+            },
+            {
+                "frame": 359,
+                "timestamp": 71.8,
+                "label": "knockdown 0.24",
+                "confidence": 0.2431773543357849,
+                "box": [
+                    214,
+                    431,
+                    383,
+                    457
+                ]
+            }
+        ]
+    }
+]
