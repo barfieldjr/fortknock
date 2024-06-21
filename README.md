@@ -1,5 +1,10 @@
 # FortKnock - Fortnite Knockdown Detection with YOLOv5
-![fontbolt (1)](https://github.com/barfieldjr/fortknock/assets/73442540/3bc0e1fd-c8b7-45a0-83d2-bca3fad67ca1)
+
+<div align="center">
+  <img src="https://github.com/barfieldjr/fortknock/assets/73442540/3bc0e1fd-c8b7-45a0-83d2-bca3fad67ca1" alt="fontbolt (1)" style="width: 70%; border: 2px solid black; border-radius: 15px;" />
+</div>
+
+
 
 ## Overview
 
