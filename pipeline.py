@@ -33,7 +33,7 @@ def run_clipping(video_filename):
         raise FileNotFoundError(f"File not found: {formatted_clusters_path}")
 
     print("Running clipping...")
-    subprocess.run(['python', 'scripts/clipping/clip.py'], check=True)
+    subprocess.run(['python', 'scripts/clipping/clip.py', video_filename], check=True)
 
 def cleanup_temp_files():
     project_root = os.path.abspath(os.path.dirname(__file__))
