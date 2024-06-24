@@ -1,2 +1,6 @@
 
 /venv
+
+/data/input/*
+
+/data/output/*
