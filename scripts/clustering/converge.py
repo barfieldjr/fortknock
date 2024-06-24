@@ -54,14 +54,14 @@ def format_clusters(clusters: List[List[Dict[str, Any]]]) -> List[Dict[str, Any]
 
 def main():
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-    file_path = os.path.join(project_root, 'output', 'detection_timestamps.json')
+    file_path = os.path.join(project_root , 'data', 'output', 'detection_timestamps.json')
     detections = load_json(file_path)
 
     clusters = find_clusters(detections)
     filtered_clusters = filter_clusters(clusters)
     formatted_clusters = format_clusters(filtered_clusters)
 
-    output_path = os.path.join(project_root, 'output', 'formatted_clusters.json')
+    output_path = os.path.join(project_root, 'data', 'output', 'formatted_clusters.json')
     with open(output_path, 'w') as outfile:
         json.dump(formatted_clusters, outfile, indent=4)
 

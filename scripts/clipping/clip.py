@@ -48,7 +48,13 @@ def crop_video(video_path: str, clusters: List[Dict[str, Any]], output_dir: str)
             '-b:a', '128k',
             output_path
         ]
+        print(f"Running command: {' '.join(cmd)}")
         subprocess.run(cmd, check=True)
+        
+        if os.path.exists(output_path):
+            print(f"Clip created: {output_path}")
+        else:
+            print(f"Failed to create clip: {output_path}")
     
     return clip_paths
 
@@ -57,7 +63,14 @@ def merge_clips(clip_paths: List[str], output_path: str):
     
     with open('clip_list.txt', 'w') as f:
         for clip_path in clip_paths:
-            f.write(f"file '{clip_path}'\n")
+            if os.path.exists(clip_path):
+                f.write(f"file '{clip_path}'\n")
+            else:
+                print(f"Clip not found: {clip_path}")
+
+    with open('clip_list.txt', 'r') as f:
+        print("Contents of clip_list.txt:")
+        print(f.read())
     
     cmd = [
         'ffmpeg',
@@ -83,14 +96,16 @@ def main():
 
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 
-    input_json = os.path.join(project_root, 'output', 'formatted_clusters.json')
-    video_path = os.path.join(project_root, 'input', args.video_filename)
-    output_dir = os.path.join(project_root, 'output', 'clips', 'output_clips')
-    merged_output_path = os.path.join(project_root, 'output', 'merged', 'merged_video.mp4')
+    input_json = os.path.join(project_root, 'data', 'output', 'formatted_clusters.json')
+    video_path = os.path.join(project_root, 'data', 'input', args.video_filename)
+    output_dir = os.path.join(project_root, 'data', 'output', 'clips', 'output_clips')
+    merged_output_path = os.path.join(project_root, 'data', 'output', 'merged', 'merged_video.mp4')
     
     clusters = load_json(input_json)
     merged_clusters = merge_clusters(clusters)
+    print(f"Merged clusters: {merged_clusters}")
     clip_paths = crop_video(video_path, merged_clusters, output_dir)
+    print(f"Clip paths: {clip_paths}")
     merge_clips(clip_paths, merged_output_path)
 
 if __name__ == "__main__":

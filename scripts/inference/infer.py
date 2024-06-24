@@ -8,6 +8,7 @@ import json
 import argparse
 
 def reduce_fps(input_video_path, output_video_path, fps):
+    os.makedirs(os.path.dirname(output_video_path), exist_ok=True)
     command = [
         'ffmpeg',
         '-y',
@@ -152,11 +153,11 @@ if __name__ == "__main__":
 
     project_root = os.path.dirname(os.path.abspath(__file__))
 
-    input_video_path = os.path.join(project_root, '..', '..', 'input', filename)
-    reduced_fps_video_path = os.path.join(project_root, '..', '..', 'data', 'raw', 'obj_train_data', 'videos', 'reduced_fps_video.mp4')
-    output_video_path = os.path.join(project_root, '..', '..', 'output', 'processed_video.mp4')
-    json_output_path = os.path.join(project_root, '..', '..', 'output', 'detection_timestamps.json')
-    frames_output_path = os.path.join(project_root, '..', '..', 'output', 'detection_frames')
+    input_video_path = os.path.join(project_root, '..', '..', 'data', 'input', filename)
+    reduced_fps_video_path = os.path.join(project_root, '..', '..', 'data', 'raw', 'videos', 'reduced_fps_video.mp4')
+    output_video_path = os.path.join(project_root, '..', '..', 'data', 'output', 'processed_video.mp4')
+    json_output_path = os.path.join(project_root, '..', '..', 'data', 'output', 'detection_timestamps.json')
+    frames_output_path = os.path.join(project_root, '..', '..', 'data', 'output', 'detection_frames')
 
     print("Reducing FPS of the video...")
     reduce_fps(input_video_path, reduced_fps_video_path, fps)

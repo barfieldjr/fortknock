@@ -1,11 +1,17 @@
 #!/bin/bash
 
-echo "Creating and activating the Conda environment..."
-conda create -n clean_env python=3.9 -y
-source $(conda info --base)/etc/profile.d/conda.sh
-conda activate clean_env
+# Create a virtual environment
+python3 -m venv venv
 
-echo "Installing dependencies from requirements.txt..."
+# Activate the virtual environment
+source venv/bin/activate
+
+# Upgrade pip
+pip install --upgrade pip
+
+# Initialize and update the YOLOv5 submodule
+git submodule update --init --recursive
+
+# Install Python dependencies
+pip install -r yolov5/requirements.txt
 pip install -r requirements.txt
-
-echo "Setup env and installed dependencies..."
