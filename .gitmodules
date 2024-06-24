@@ -1,6 +1,3 @@
-[submodule "knockdata"]
-	path = knockdata
-	url = https://github.com/barfieldjr/fortknock-data
 [submodule "yolov5"]
 	path = yolov5
 	url = https://github.com/ultralytics/yolov5.git
