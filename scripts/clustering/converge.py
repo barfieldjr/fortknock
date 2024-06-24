@@ -1,13 +1,12 @@
 import json
+import os
 from typing import List, Dict, Any
 
-# Function to load JSON data
 def load_json(file_path: str) -> List[Dict[str, Any]]:
     with open(file_path, 'r') as file:
         data = json.load(file)
     return data
 
-# Function to find clusters based on time and frame difference
 def find_clusters(detections: List[Dict[str, Any]], time_threshold: float = 2.0, frame_gap: int = 3) -> List[List[Dict[str, Any]]]:
     clusters = []
     current_cluster = []
@@ -28,7 +27,6 @@ def find_clusters(detections: List[Dict[str, Any]], time_threshold: float = 2.0,
 
     return clusters
 
-# Function to filter clusters based on consistency in box coordinates and minimum length
 def filter_clusters(clusters: List[List[Dict[str, Any]]], min_cluster_length: int = 3) -> List[List[Dict[str, Any]]]:
     filtered_clusters = []
 
@@ -38,7 +36,6 @@ def filter_clusters(clusters: List[List[Dict[str, Any]]], min_cluster_length: in
 
     return filtered_clusters
 
-# Function to format clusters into a structured data model
 def format_clusters(clusters: List[List[Dict[str, Any]]]) -> List[Dict[str, Any]]:
     formatted_clusters = []
 
@@ -55,25 +52,19 @@ def format_clusters(clusters: List[List[Dict[str, Any]]]) -> List[Dict[str, Any]
 
     return formatted_clusters
 
-# Main function to process the JSON data and extract clusters
 def main():
-    file_path = '../../output/detection_timestamps.json'  # Replace with your JSON file path
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+    file_path = os.path.join(project_root, 'output', 'detection_timestamps.json')
     detections = load_json(file_path)
-    
-    # Find clusters with detections within 2 seconds and 3 frames of each other
-    clusters = find_clusters(detections)
-    
-    # Filter clusters to ensure each has at least 3 detections
-    filtered_clusters = filter_clusters(clusters)
 
-    # Format clusters into the desired data model
+    clusters = find_clusters(detections)
+    filtered_clusters = filter_clusters(clusters)
     formatted_clusters = format_clusters(filtered_clusters)
 
-    # Output the data model
-    with open('./formatted_clusters.json', 'w') as outfile:
+    output_path = os.path.join(project_root, 'output', 'formatted_clusters.json')
+    with open(output_path, 'w') as outfile:
         json.dump(formatted_clusters, outfile, indent=4)
 
-    # Print the clusters (optional, for verification)
     for cluster in formatted_clusters:
         print(cluster)
 

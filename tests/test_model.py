@@ -1,15 +1,14 @@
 import unittest
-from src.model import train, infer
 
 class TestModel(unittest.TestCase):
 
     def test_train(self):
-        # Add your test code here
-        self.assertTrue(True)
+        # TODO
+        pass
 
     def test_infer(self):
-        # Add your test code here
-        self.assertTrue(True)
+        # TODO
+        pass
 
 if __name__ == '__main__':
     unittest.main()
