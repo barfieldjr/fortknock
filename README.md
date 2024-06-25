@@ -1,4 +1,4 @@
-# FortKnock - Fortnite Knockdown Detection with YOLOv5
+# Fortknock - Fortnite Knockdown Detection with YOLOv5
 
 <div align="center">
   <img src="https://github.com/barfieldjr/fortknock/assets/73442540/3bc0e1fd-c8b7-45a0-83d2-bca3fad67ca1" alt="fontbolt (1)" style="width: 70%; border: 2px solid black; border-radius: 15px;" />
@@ -6,7 +6,7 @@
 
 ## Overview
 
-FortKnock is a machine learning project that uses the YOLOv5 object detection model to identify if a player has been knocked down in the game Fortnite. This model is designed to run fast inference with high throughput.
+Fortknock is a machine learning project that uses the YOLOv5 object detection model to identify if a player has been knocked down in the game Fortnite. This model is designed to run fast inference with high throughput.
 
 ## Repository Structure
 
