@@ -52,7 +52,7 @@ FortKnock is a machine learning project that uses the YOLOv5 object detection mo
    The start script takes two parameters, the filename of the video to run inference on, and the number of fps (recommended 5fps):
 
 ```sh
-source ./setup.sh your_filename.mp4 5
+source ./start.sh your_filename.mp4 5
 ```
 
 ### Training the Model
