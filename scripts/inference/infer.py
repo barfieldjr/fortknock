@@ -105,7 +105,7 @@ def process_video(video_path, output_path, json_output_path, frames_output_path,
 
             draw_region_bounds(img_resized)
 
-            print(f"Running inference on frame {frame_count}...")
+            print(f"Running inference on frame {frame_count}...", flush=True)
             results = model(img_resized)
 
             detection_made = False

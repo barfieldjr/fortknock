@@ -5,7 +5,6 @@ from typing import List, Dict, Any
 import argparse
 
 def load_json(file_path: str) -> List[Dict[str, Any]]:
-    # Create the file if it does not exist
     if not os.path.exists(file_path):
         print(f"File {file_path} does not exist, creating an empty file.")
         with open(file_path, 'w') as file:
