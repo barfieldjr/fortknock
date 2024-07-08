@@ -115,3 +115,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+def run_clip(video_filename: str):
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+
+    input_json = os.path.join(project_root, 'data', 'output', 'formatted_clusters.json')
+    video_path = os.path.join(project_root, 'data', 'input', video_filename)
+    output_dir = os.path.join(project_root, 'data', 'output', 'clips', 'output_clips')
+    merged_output_path = os.path.join(project_root, 'data', 'output', 'merged', 'merged_video.mp4')
+    
+    clusters = load_json(input_json)
+    merged_clusters = merge_clusters(clusters)
+    clip_paths = crop_video(video_path, merged_clusters, output_dir)
+    merge_clips(clip_paths, merged_output_path)

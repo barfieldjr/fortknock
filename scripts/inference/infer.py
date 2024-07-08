@@ -1,7 +1,6 @@
 import torch
 import cv2
 import numpy as np
-import random
 import os
 import subprocess
 import json
@@ -19,18 +18,6 @@ def reduce_fps(input_video_path, output_video_path, fps):
     print(f"Running command: {' '.join(command)}")
     subprocess.run(command, check=True)
 
-def plot_one_box(x, img, color=None, label=None, line_thickness=3):
-    tl = line_thickness or round(0.002 * (img.shape[0] + img.shape[1]) / 2) + 1
-    color = color or [random.randint(0, 255) for _ in range(3)]
-    c1, c2 = (int(x[0]), int(x[1])), (int(x[2]), int(x[3]))
-    cv2.rectangle(img, c1, c2, color, thickness=tl, lineType=cv2.LINE_AA)
-    if label:
-        tf = max(tl - 1, 1)
-        t_size = cv2.getTextSize(label, 0, fontScale=tl / 3, thickness=tf)[0]
-        c2 = c1[0] + t_size[0], c1[1] - t_size[1] - 3
-        cv2.rectangle(img, c1, c2, color, -1, cv2.LINE_AA)
-        cv2.putText(img, label, (c1[0], c1[1] - 2), 0, tl / 3, [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
-
 def is_within_region(x, img_width, img_height):
     x_start = 260
     x_end = 380
@@ -42,17 +29,7 @@ def is_within_region(x, img_width, img_height):
     within_vertical_bounds = y_start <= y_center <= y_end
     return within_horizontal_bounds and within_vertical_bounds
 
-def draw_region_bounds(img):
-    x_start = 260
-    x_end = 380
-    y_start = 370
-    y_end = 590
-    cv2.rectangle(img, (x_start, y_start), (x_end, y_end), (0, 255, 0), 2)
-
-def save_frame(frame, output_path, frame_count):
-    cv2.imwrite(f"{output_path}/frame_{frame_count}.jpg", frame)
-
-def process_video(video_path, output_path, json_output_path, frames_output_path, codec):
+def process_video(video_path, output_path, json_output_path, codec):
     print(f"Starting inference on video: {video_path}")
 
     project_root = os.path.dirname(os.path.abspath(__file__))
@@ -86,8 +63,8 @@ def process_video(video_path, output_path, json_output_path, frames_output_path,
     frame_count = 0
     detection_timestamps = []
 
-    if not os.path.exists(frames_output_path):
-        os.makedirs(frames_output_path)
+    batch_size = fps  # Process one second of video frames at a time
+    frames_batch = []
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -96,41 +73,15 @@ def process_video(video_path, output_path, json_output_path, frames_output_path,
             break
 
         frame_count += 1
-        if frame_count % 10 == 0:
-            print(f"Processing frame {frame_count}/{total_frames}")
+        frames_batch.append(frame)
 
-        try:
-            img_resized = cv2.resize(frame, (640, 640))
-            img_height, img_width, _ = img_resized.shape
+        if len(frames_batch) == batch_size:
+            process_frames(frames_batch, frame_count, model, fps, detection_timestamps, out)
+            frames_batch = []
 
-            draw_region_bounds(img_resized)
-
-            print(f"Running inference on frame {frame_count}...", flush=True)
-            results = model(img_resized)
-
-            detection_made = False
-            for *box, conf, cls in results.xyxy[0]:
-                if is_within_region(box, img_width, img_height):
-                    label = f'{model.names[int(cls)]} {conf:.2f}'
-                    plot_one_box(box, img_resized, label=label, color=(255, 0, 0), line_thickness=2)
-                    detection_made = True
-
-                    timestamp = frame_count / fps
-                    detection_timestamps.append({
-                        "frame": frame_count,
-                        "timestamp": timestamp,
-                        "label": label,
-                        "confidence": float(conf),
-                        "box": [int(x) for x in box]
-                    })
-
-            if detection_made:
-                save_frame(img_resized, frames_output_path, frame_count)
-
-            out.write(img_resized)
-        except Exception as e:
-            print(f"Error processing frame {frame_count}: {e}")
-            break
+    # Process any remaining frames in the batch
+    if frames_batch:
+        process_frames(frames_batch, frame_count, model, fps, detection_timestamps, out)
 
     cap.release()
     out.release()
@@ -141,6 +92,31 @@ def process_video(video_path, output_path, json_output_path, frames_output_path,
     print(f"Processed video saved to {output_path}")
     print(f"Detection timestamps saved to {json_output_path}")
     print("Processing completed.")
+
+def process_frames(frames_batch, frame_count, model, fps, detection_timestamps, out):
+    for frame in frames_batch:
+        try:
+            img_resized = cv2.resize(frame, (640, 640))
+            img_height, img_width, _ = img_resized.shape
+
+            print(f"Running inference on frame {frame_count}...", flush=True)
+            results = model(img_resized)
+
+            for *box, conf, cls in results.xyxy[0]:
+                if is_within_region(box, img_width, img_height):
+                    timestamp = frame_count / fps
+                    detection_timestamps.append({
+                        "frame": frame_count,
+                        "timestamp": timestamp,
+                        "label": model.names[int(cls)],
+                        "confidence": float(conf),
+                        "box": [int(x) for x in box]
+                    })
+
+            out.write(img_resized)
+        except Exception as e:
+            print(f"Error processing frame {frame_count}: {e}")
+            break
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process video for object detection.')
@@ -157,9 +133,21 @@ if __name__ == "__main__":
     reduced_fps_video_path = os.path.join(project_root, '..', '..', 'data', 'raw', 'videos', 'reduced_fps_video.mp4')
     output_video_path = os.path.join(project_root, '..', '..', 'data', 'output', 'processed_video.mp4')
     json_output_path = os.path.join(project_root, '..', '..', 'data', 'output', 'detection_timestamps.json')
-    frames_output_path = os.path.join(project_root, '..', '..', 'data', 'output', 'detection_frames')
 
     print("Reducing FPS of the video...")
     reduce_fps(input_video_path, reduced_fps_video_path, fps)
 
-    process_video(reduced_fps_video_path, output_video_path, json_output_path, frames_output_path, cv2.VideoWriter_fourcc(*'mp4v'))
+    process_video(reduced_fps_video_path, output_video_path, json_output_path, cv2.VideoWriter_fourcc(*'mp4v'))
+
+def run_inference(filename, fps):
+    project_root = os.path.dirname(os.path.abspath(__file__))
+
+    input_video_path = os.path.join(project_root, '..', '..', 'data', 'input', filename)
+    reduced_fps_video_path = os.path.join(project_root, '..', '..', 'data', 'raw', 'videos', 'reduced_fps_video.mp4')
+    output_video_path = os.path.join(project_root, '..', '..', 'data', 'output', 'processed_video.mp4')
+    json_output_path = os.path.join(project_root, '..', '..', 'data', 'output', 'detection_timestamps.json')
+
+    print("Reducing FPS of the video...")
+    reduce_fps(input_video_path, reduced_fps_video_path, fps)
+
+    process_video(reduced_fps_video_path, output_video_path, json_output_path, cv2.VideoWriter_fourcc(*'mp4v'))
