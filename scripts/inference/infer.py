@@ -6,6 +6,14 @@ import subprocess
 import json
 import argparse
 
+def get_total_frames(video_path):
+    cap = cv2.VideoCapture(video_path)
+    if not cap.isOpened():
+        raise FileNotFoundError(f"Video not found at {video_path}")
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    cap.release()
+    return total_frames
+
 def reduce_fps(input_video_path, output_video_path, fps):
     os.makedirs(os.path.dirname(output_video_path), exist_ok=True)
     command = [
@@ -29,7 +37,7 @@ def is_within_region(x, img_width, img_height):
     within_vertical_bounds = y_start <= y_center <= y_end
     return within_horizontal_bounds and within_vertical_bounds
 
-def process_video(video_path, output_path, json_output_path, codec):
+def process_video(video_path, output_path, json_output_path, codec, total_frames):
     print(f"Starting inference on video: {video_path}")
 
     project_root = os.path.dirname(os.path.abspath(__file__))
@@ -55,7 +63,6 @@ def process_video(video_path, output_path, json_output_path, codec):
     frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = int(cap.get(cv2.CAP_PROP_FPS))
-    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
     print(f"Video properties: width={frame_width}, height={frame_height}, fps={fps}, total_frames={total_frames}")
 
     out = cv2.VideoWriter(output_path, codec, fps, (640, 640))
@@ -78,6 +85,9 @@ def process_video(video_path, output_path, json_output_path, codec):
         if len(frames_batch) == batch_size:
             process_frames(frames_batch, frame_count, model, fps, detection_timestamps, out)
             frames_batch = []
+        
+        progress = (frame_count / total_frames) * 100
+        yield frame_count, progress
 
     # Process any remaining frames in the batch
     if frames_batch:
@@ -118,27 +128,6 @@ def process_frames(frames_batch, frame_count, model, fps, detection_timestamps, 
             print(f"Error processing frame {frame_count}: {e}")
             break
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Process video for object detection.')
-    parser.add_argument('filename', type=str, help='Filename of the input video file')
-    parser.add_argument('fps', type=int, help='Frames per second for the reduced FPS video')
-    args = parser.parse_args()
-
-    filename = args.filename
-    fps = args.fps
-
-    project_root = os.path.dirname(os.path.abspath(__file__))
-
-    input_video_path = os.path.join(project_root, '..', '..', 'data', 'input', filename)
-    reduced_fps_video_path = os.path.join(project_root, '..', '..', 'data', 'raw', 'videos', 'reduced_fps_video.mp4')
-    output_video_path = os.path.join(project_root, '..', '..', 'data', 'output', 'processed_video.mp4')
-    json_output_path = os.path.join(project_root, '..', '..', 'data', 'output', 'detection_timestamps.json')
-
-    print("Reducing FPS of the video...")
-    reduce_fps(input_video_path, reduced_fps_video_path, fps)
-
-    process_video(reduced_fps_video_path, output_video_path, json_output_path, cv2.VideoWriter_fourcc(*'mp4v'))
-
 def run_inference(filename, fps):
     project_root = os.path.dirname(os.path.abspath(__file__))
 
@@ -149,5 +138,17 @@ def run_inference(filename, fps):
 
     print("Reducing FPS of the video...")
     reduce_fps(input_video_path, reduced_fps_video_path, fps)
+    yield 0, 10  # 10% progress after reducing FPS
 
-    process_video(reduced_fps_video_path, output_video_path, json_output_path, cv2.VideoWriter_fourcc(*'mp4v'))
+    total_frames = get_total_frames(reduced_fps_video_path)
+    for frame, progress in process_video(reduced_fps_video_path, output_video_path, json_output_path, cv2.VideoWriter_fourcc(*'mp4v'), total_frames):
+        yield frame, 10 + (progress * 0.9)  # Scale progress to 10-100%
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Process video for object detection.')
+    parser.add_argument('filename', type=str, help='Filename of the input video file')
+    parser.add_argument('fps', type=int, help='Frames per second for the reduced FPS video')
+    args = parser.parse_args()
+
+    for frame, progress in run_inference(args.filename, args.fps):
+        print(f"Progress: {progress:.2f}%, Frame: {frame}")

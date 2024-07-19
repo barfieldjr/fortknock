@@ -29,10 +29,11 @@ def create_directory(directory: str):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-def crop_video(video_path: str, clusters: List[Dict[str, Any]], output_dir: str) -> List[str]:
+def crop_video(video_path: str, clusters: List[Dict[str, Any]], output_dir: str):
     create_directory(output_dir)
     
     clip_paths = []
+    total_clusters = len(clusters)
     for i, cluster in enumerate(clusters):
         start_time = cluster['start_time']
         duration = cluster['end_time'] - start_time
@@ -60,6 +61,9 @@ def crop_video(video_path: str, clusters: List[Dict[str, Any]], output_dir: str)
             print(f"Clip created: {output_path}")
         else:
             print(f"Failed to create clip: {output_path}")
+        
+        progress = ((i + 1) / total_clusters) * 100
+        yield progress
     
     return clip_paths
 
@@ -94,28 +98,6 @@ def merge_clips(clip_paths: List[str], output_path: str):
     subprocess.run(cmd, check=True)
     os.remove('clip_list.txt')
 
-def main():
-    parser = argparse.ArgumentParser(description='Process and clip video based on clusters.')
-    parser.add_argument('video_filename', type=str, help='Filename of the input video file')
-    args = parser.parse_args()
-
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-
-    input_json = os.path.join(project_root, 'data', 'output', 'formatted_clusters.json')
-    video_path = os.path.join(project_root, 'data', 'input', args.video_filename)
-    output_dir = os.path.join(project_root, 'data', 'output', 'clips', 'output_clips')
-    merged_output_path = os.path.join(project_root, 'data', 'output', 'merged', 'merged_video.mp4')
-    
-    clusters = load_json(input_json)
-    merged_clusters = merge_clusters(clusters)
-    print(f"Merged clusters: {merged_clusters}")
-    clip_paths = crop_video(video_path, merged_clusters, output_dir)
-    print(f"Clip paths: {clip_paths}")
-    merge_clips(clip_paths, merged_output_path)
-
-if __name__ == "__main__":
-    main()
-
 def run_clip(video_filename: str):
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 
@@ -126,5 +108,19 @@ def run_clip(video_filename: str):
     
     clusters = load_json(input_json)
     merged_clusters = merge_clusters(clusters)
-    clip_paths = crop_video(video_path, merged_clusters, output_dir)
+    yield 10  
+    
+    for progress in crop_video(video_path, merged_clusters, output_dir):
+        yield 10 + (progress * 0.8) 
+    
+    clip_paths = [os.path.join(output_dir, f"clip_{i+1}.mp4") for i in range(len(merged_clusters))]
     merge_clips(clip_paths, merged_output_path)
+    yield 100  
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Process and clip video based on clusters.')
+    parser.add_argument('video_filename', type=str, help='Filename of the input video file')
+    args = parser.parse_args()
+
+    for progress in run_clip(args.video_filename):
+        print(f"Progress: {progress:.2f}%")

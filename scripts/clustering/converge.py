@@ -10,7 +10,6 @@ def load_json(file_path: str) -> List[Dict[str, Any]]:
 def find_clusters(detections: List[Dict[str, Any]], time_threshold: float = 2.0, frame_gap: int = 3) -> List[List[Dict[str, Any]]]:
     clusters = []
     current_cluster = []
-
     for i, detection in enumerate(detections):
         if not current_cluster:
             current_cluster.append(detection)
@@ -21,24 +20,19 @@ def find_clusters(detections: List[Dict[str, Any]], time_threshold: float = 2.0,
             else:
                 clusters.append(current_cluster)
                 current_cluster = [detection]
-    
     if current_cluster:
         clusters.append(current_cluster)
-
     return clusters
 
 def filter_clusters(clusters: List[List[Dict[str, Any]]], min_cluster_length: int = 3) -> List[List[Dict[str, Any]]]:
     filtered_clusters = []
-
     for cluster in clusters:
         if len(cluster) >= min_cluster_length:
             filtered_clusters.append(cluster)
-
     return filtered_clusters
 
 def format_clusters(clusters: List[List[Dict[str, Any]]]) -> List[Dict[str, Any]]:
     formatted_clusters = []
-
     for i, cluster in enumerate(clusters):
         cluster_data = {
             "cluster_id": i + 1,
@@ -49,24 +43,32 @@ def format_clusters(clusters: List[List[Dict[str, Any]]]) -> List[Dict[str, Any]
             "detections": cluster
         }
         formatted_clusters.append(cluster_data)
-
     return formatted_clusters
 
 def main():
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-    file_path = os.path.join(project_root , 'data', 'output', 'detection_timestamps.json')
+    file_path = os.path.join(project_root, 'data', 'output', 'detection_timestamps.json')
+    
+    yield 0  
+    
     detections = load_json(file_path)
-
+    yield 10  
+    
     clusters = find_clusters(detections)
+    yield 40  
+    
     filtered_clusters = filter_clusters(clusters)
+    yield 70 
+    
     formatted_clusters = format_clusters(filtered_clusters)
-
+    yield 90  
+    
     output_path = os.path.join(project_root, 'data', 'output', 'formatted_clusters.json')
     with open(output_path, 'w') as outfile:
         json.dump(formatted_clusters, outfile, indent=4)
-
-    for cluster in formatted_clusters:
-        print(cluster)
+    
+    yield 100  
 
 if __name__ == "__main__":
-    main()
+    for progress in main():
+        print(f"Progress: {progress}%")
