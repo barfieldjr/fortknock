@@ -70,15 +70,24 @@ def crop_video(video_path: str, clusters: List[Dict[str, Any]], output_dir: str)
 def merge_clips(clip_paths: List[str], output_path: str):
     create_directory(os.path.dirname(output_path))
     
-    with open('clip_list.txt', 'w') as f:
-        for clip_path in clip_paths:
-            if os.path.exists(clip_path):
-                f.write(f"file '{clip_path}'\n")
-            else:
-                print(f"Clip not found: {clip_path}")
+    existing_clips = []
+    for clip_path in clip_paths:
+        if os.path.exists(clip_path):
+            existing_clips.append(clip_path)
+        else:
+            print(f"Warning: Clip not found: {clip_path}")
+    
+    if not existing_clips:
+        print("Error: No valid clips found to merge.")
+        return
 
-    with open('clip_list.txt', 'r') as f:
-        print("Contents of clip_list.txt:")
+    clip_list_path = 'clip_list.txt'
+    with open(clip_list_path, 'w') as f:
+        for clip_path in existing_clips:
+            f.write(f"file '{os.path.abspath(clip_path)}'\n")
+
+    print("Contents of clip_list.txt:")
+    with open(clip_list_path, 'r') as f:
         print(f.read())
     
     cmd = [
@@ -86,17 +95,24 @@ def merge_clips(clip_paths: List[str], output_path: str):
         '-y',
         '-f', 'concat',
         '-safe', '0',
-        '-i', 'clip_list.txt',
-        '-c:v', 'libx264',
-        '-preset', 'fast',
-        '-crf', '18',
-        '-pix_fmt', 'yuv420p',
-        '-c:a', 'aac',
-        '-b:a', '128k',
+        '-i', clip_list_path,
+        '-c', 'copy',
         output_path
     ]
-    subprocess.run(cmd, check=True)
-    os.remove('clip_list.txt')
+    print(f"Running FFmpeg command: {' '.join(cmd)}")
+    result = subprocess.run(cmd, check=True, capture_output=True, text=True)
+    
+    print("FFmpeg stdout:")
+    print(result.stdout)
+    print("FFmpeg stderr:")
+    print(result.stderr)
+
+    os.remove(clip_list_path)
+
+    if os.path.exists(output_path):
+        print(f"Successfully created merged video: {output_path}")
+    else:
+        print(f"Failed to create merged video: {output_path}")
 
 def run_clip(video_filename: str):
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -109,13 +125,23 @@ def run_clip(video_filename: str):
     clusters = load_json(input_json)
     merged_clusters = merge_clusters(clusters)
     yield 10  
-    
+
+    clip_paths = []
     for progress in crop_video(video_path, merged_clusters, output_dir):
         yield 10 + (progress * 0.8) 
     
     clip_paths = [os.path.join(output_dir, f"clip_{i+1}.mp4") for i in range(len(merged_clusters))]
+    print(f"Attempting to merge the following clips: {clip_paths}")
     merge_clips(clip_paths, merged_output_path)
     yield 100  
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Process and clip video based on clusters.')
+    parser.add_argument('video_filename', type=str, help='Filename of the input video file')
+    args = parser.parse_args()
+
+    for progress in run_clip(args.video_filename):
+        print(f"Progress: {progress:.2f}%")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process and clip video based on clusters.')
